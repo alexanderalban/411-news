@@ -11,7 +11,7 @@ class JustSearchBar extends React.Component {
             arrayOfStories: [],
             question: "",
             searchState: "",
-            dropdown: "dog",
+            dropdown: "term",
             searched: false
         }
     };
@@ -29,10 +29,17 @@ class JustSearchBar extends React.Component {
     handleSubmit = (event) => {
         event.preventDefault();
         console.log('this word that was searched was ' + this.state.question)
-        let searchTerm = `http://hn.algolia.com/api/v1/search?query=${this.state.question}&tags=story`
-        this.setState({ searchState: searchTerm})
-        console.log(searchTerm)    
-        this.setState({searched: true})
+        if(this.state.dropdown === "term"){
+            let searchTerm = `http://hn.algolia.com/api/v1/search?query=${this.state.question}&tags=story`
+            this.setState({ searchState: searchTerm})
+            console.log(searchTerm)    
+            this.setState({searched: true})
+        } else if(this.state.dropdown === "author"){
+            let searchTerm = `http://hn.algolia.com/api/v1/search?tags=story,author_${this.state.question}`
+            this.setState({ searchState: searchTerm})
+            console.log(searchTerm)    
+            this.setState({searched: true})
+        }
     }
     
     render() {
@@ -43,7 +50,6 @@ class JustSearchBar extends React.Component {
                 <select value={this.state.dropdown} onChange={this.handleDropdown}>
                     <option value="term" >Term</option>
                     <option value="author">Author</option>
-                    <option value="dog">dog</option>
                 </select>
                 <form onSubmit={this.handleSubmit}>
                     <input type="text" value={this.state.question} onChange={e=>this.handleChange(e)} />
