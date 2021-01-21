@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import axios from 'axios';
+
 import './App.css';
 
 import JustSearchBar from './JustSearchBar';
