@@ -23,7 +23,7 @@ class AxiosGet extends Component {
             <div>
                 <ol>{this.state.arrayOfStories.map((story, index) => {
                     return(
-                        <li key={index}> {story.title}{story.url}</li>
+                        <li key={index}> {story.title} <a href={story.url} target="_blank">{story.url}</a></li>
                     )
                 })}</ol>
             </div>
