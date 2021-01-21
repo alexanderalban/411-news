@@ -3,15 +3,31 @@ import axios from 'axios';
 
 import './App.css';
 
+import JustSearchBar from './JustSearchBar';
 
-function App() {
-  return (
-    <div className="App">
+class App extends Component {
+
+  constructor() {
+    super()
+
+    this.state = {
+      hasSearched: false,
+      arrayOfStories: [],
+    }
+
+  }
+
+
+  render() {
+
+    return (
+      <div className="App">
       <header className="App-header">
-    <SearchPage />
+        <JustSearchBar></JustSearchBar>
       </header>
     </div>
   );
+}
 }
 
 export default App;
