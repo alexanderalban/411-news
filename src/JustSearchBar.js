@@ -40,10 +40,11 @@ class JustSearchBar extends React.Component {
             console.log(searchTerm)    
             this.setState({searched: true})
         }
+        // this.setState({ searchState: "" })
     }
     
     render() {
-        if(!this.state.searched) {
+        if(!this.state.searchState) {
             return(
                 <section>
                 <label>Search By:  </label>

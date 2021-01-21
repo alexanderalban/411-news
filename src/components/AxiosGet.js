@@ -11,11 +11,14 @@ class AxiosGet extends Component {
     }
 
     componentDidMount() {
+        // if(!this.state.arrayOfStories) {
+        //     this.state.arrayOfStories.splice(0, this.state.arrayOfStories.length-1)
+        // } 
         axios.get(this.props.searchTerm)
-            .then( res => {
+        .then( res => {
             const arrayOfStories = res.data.hits
             this.setState({ arrayOfStories })
-            })
+        })
     }
 
     render() {
