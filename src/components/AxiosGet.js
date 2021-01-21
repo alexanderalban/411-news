@@ -11,7 +11,7 @@ class AxiosGet extends Component {
     }
 
     componentDidMount() {
-        axios.get(searchTerm)
+        axios.get(this.props.searchTerm)
             .then( res => {
             const arrayOfStories = res.data.hits
             this.setState({ arrayOfStories })
