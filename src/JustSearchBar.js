@@ -9,7 +9,8 @@ class JustSearchBar extends React.Component {
         this.state = {
             arrayOfStories: [],
             question: "",
-            searchState: ""
+            searchState: "",
+            searched: false
         }
     };
 
@@ -25,21 +26,36 @@ class JustSearchBar extends React.Component {
         let searchTerm = `http://hn.algolia.com/api/v1/search?query=${this.state.question}&tags=story`
         this.setState({ searchState: searchTerm})
         console.log(searchTerm)    
+        this.setState({searched: true})
         }
 
     render() {
-        return(
-            <section>
-            <form onSubmit={this.handleSubmit}>
-                <label>
-                    Search
-                <input type="text" value={this.state.question} onChange={e=>this.handleChange(e)} />
-                </label>
-                <input type="submit" value="Submit" />
-            </form>
-            {/* <AxiosGet searchTerm={this.state.searchState}/> */}
-            </section>
-        );
+        if(!this.state.searched) {
+            return(
+                <section>
+                <form onSubmit={this.handleSubmit}>
+                    <label>
+                        Search
+                    <input type="text" value={this.state.question} onChange={e=>this.handleChange(e)} />
+                    </label>
+                    <input type="submit" value="Submit" />
+                </form>
+                </section>
+            );
+        } else {
+            return(
+                <section>
+                    <form onSubmit={this.handleSubmit}>
+                        <label>
+                            Search
+                        <input type="text" value={this.state.question} onChange={e=>this.handleChange(e)} />
+                        </label>
+                        <input type="submit" value="Submit" />
+                    </form>
+                    <AxiosGet searchTerm={this.state.searchState}/>
+                </section>
+            )
+        }
     }
 
 }
