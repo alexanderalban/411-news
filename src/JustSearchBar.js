@@ -8,113 +8,28 @@ class JustSearchBar extends Component {
         super(props)
 
         this.state = {
-            arrayOfStories: [
-                {
-                id: 1,
-                created_at: "2006-10-09T18:21:51.000Z",
-                author: "pg",
-                title: "Y Combinator",
-                url: "http://ycombinator.com",
-                text: null,
-                points: 57,
-                parent_id: null,
-                children: 
-                [
-                {
-                id: 15,
-                created_at: "2006-10-09T19:51:01.000Z",
-                author: "sama",
-                text: "&#34;the rising star of venture capital&#34; -unknown VC eating lunch on SHR",
-                points: 5,
-                parent_id: 1,
-                children: 
-                [
-                {
-                id: 17,
-                created_at: "2006-10-09T19:52:45.000Z",
-                author: "pg",
-                text: "Is there anywhere to eat on Sandhill Road?",
-                points: 5,
-                parent_id: 15,
-                children: [ ]
-                }
-                ]
-                }
-                ]
-                },
-                {
-                    id: 2,
-                    created_at: "2006-10-09T18:21:51.000Z",
-                    author: "pg",
-                    title: "Y Combinator",
-                    url: "http://ycombinator.com",
-                    text: null,
-                    points: 57,
-                    parent_id: null,
-                    children: 
-                    [
-                    {
-                    id: 15,
-                    created_at: "2006-10-09T19:51:01.000Z",
-                    author: "sama",
-                    text: "&#34;the rising star of venture capital&#34; -unknown VC eating lunch on SHR",
-                    points: 5,
-                    parent_id: 1,
-                    children: 
-                    [
-                    {
-                    id: 17,
-                    created_at: "2006-10-09T19:52:45.000Z",
-                    author: "pg",
-                    text: "Is there anywhere to eat on Sandhill Road?",
-                    points: 5,
-                    parent_id: 15,
-                    children: [ ]
-                    }
-                    ]
-                    }
-                    ]
-                    },
-                    {
-                        id: 3,
-                        created_at: "2006-10-09T18:21:51.000Z",
-                        author: "pg",
-                        title: "Y Combinator",
-                        url: "http://ycombinator.com",
-                        text: null,
-                        points: 57,
-                        parent_id: null,
-                        children: 
-                        [
-                        {
-                        id: 15,
-                        created_at: "2006-10-09T19:51:01.000Z",
-                        author: "sama",
-                        text: "&#34;the rising star of venture capital&#34; -unknown VC eating lunch on SHR",
-                        points: 5,
-                        parent_id: 1,
-                        children: 
-                        [
-                        {
-                        id: 17,
-                        created_at: "2006-10-09T19:52:45.000Z",
-                        author: "pg",
-                        text: "Is there anywhere to eat on Sandhill Road?",
-                        points: 5,
-                        parent_id: 15,
-                        children: [ ]
-                        }
-                        ]
-                        }
-                        ]
-                        },
-            ],
+            arrayOfStories: [],
             question: "",
             searchState: "",
             dropdown: "term",
-            searched: false
+            searched: false,
+            currentTime: 0,
+            timeState: "all",
+            searchTime: 0
         }
     };
+
+    componentDidMount() {
+        let ts = new Date().getTime()/1000;
+        // console.log(ts)
+        this.setState({ currentTime: ts})
+    }
+
+    handleTime = (e) => {
+        this.setState({
+            timeState: e.target.value
+        })
+    }
     
     handleDropdown = (event) => {
         this.setState({
@@ -128,23 +43,45 @@ class JustSearchBar extends Component {
     
     handleSubmit = (event) => {
         event.preventDefault();
+        let newTime;
+        let curTime = this.state.currentTime;
+        if (this.state.timeState === "24Hours") {
+            newTime = curTime - 86400
+        } else if (this.state.timeState === "week") {
+            newTime = curTime - 604800
+        } else if (this.state.timeState === "month") {
+            newTime = curTime - 2628000
+        }
+        this.setState({
+            searchTime: newTime
+        })
         console.log('this word that was searched was ' + this.state.question)
         let searchTerm;
-        if(this.state.dropdown === "term"){
+        if(this.state.dropdown === "term" && this.state.timeState !== "all"){
+            searchTerm = `http://hn.algolia.com/api/v1/search_by_date?tags=story&numericFilters=created_at_i>${newTime},created_at_i<${this.state.currentTime}&query=${this.state.question}&tags=story`
+            this.setState({ searchState: searchTerm})
+            console.log(searchTerm)
+            this.setState({searched: true})
+        } else if(this.state.dropdown === "term" && this.state.timeState === "all"){
             searchTerm = `http://hn.algolia.com/api/v1/search?query=${this.state.question}&tags=story`
             this.setState({ searchState: searchTerm})
             console.log(searchTerm)    
             this.setState({searched: true})
+        } else if(this.state.dropdown === "term" && this.state.timeState !== "all"){
+            searchTerm = `http://hn.algolia.com/api/v1/search_by_date?tags=story&numericFilters=created_at_i>${newTime},created_at_i<${this.state.currentTime}&tags=story,author_${this.state.question}`
+            this.setState({ searchState: searchTerm})
+            console.log(searchTerm)
+            this.setState({searched: true})
         } else if(this.state.dropdown === "author"){
             searchTerm = `http://hn.algolia.com/api/v1/search?tags=story,author_${this.state.question}`
             this.setState({ searchState: searchTerm})
-            console.log(searchTerm)    
+            console.log(searchTerm)
             this.setState({searched: true})
         }
         axios.get(searchTerm)
             .then( res => {
                 const arrayOfStories = res.data.hits
-                // this.setState({ arrayOfStories })
+                this.setState({ arrayOfStories })
             })
     }
 
@@ -155,11 +92,15 @@ class JustSearchBar extends Component {
             question: "",
             searchState: "",
             dropdown: "term",
-            searched: false
+            searched: false,
+            currentTime: 0,
+            timeState: "all",
+            searchTime: 0
         })
     }
     
     render() {
+        
         if(!this.state.searchState && this.state.dropdown === 'term') {
             return(
                 <section>
@@ -168,6 +109,14 @@ class JustSearchBar extends Component {
                     <option value="term" >Term</option>
                     <option value="author">Author</option>
                 </select>
+                <label>  Date Range:  </label>
+                <select value={this.state.timeState} onChange={this.handleTime}>
+                    <option value="all">All</option>
+                    <option value="24Hours">24 Hours</option>
+                    <option value="week">Week</option>
+                    <option value="month">Month</option>
+                </select>
+
                 <form onSubmit={this.handleSubmit}>
                     <input type="text" placeholder="Seach by term" value={this.state.question} onChange={e=>this.handleChange(e)} />
                     <input type="submit" value="Submit" />
@@ -181,6 +130,14 @@ class JustSearchBar extends Component {
                 <select value={this.state.dropdown} onChange={this.handleDropdown}>
                     <option value="term" >Term</option>
                     <option value="author">Author</option>
+                </select>
+
+                <label>  Date Range:  </label>
+                <select value={this.state.timeState} onChange={this.handleTime}>
+                    <option value="all">All</option>
+                    <option value="24Hours">24 Hours</option>
+                    <option value="Week">Week</option>
+                    <option value="Month">Month</option>
                 </select>
                 <form onSubmit={this.handleSubmit}>
                     <input type="text" placeholder="Seach by author" value={this.state.question} onChange={e=>this.handleChange(e)} />
@@ -196,6 +153,14 @@ class JustSearchBar extends Component {
                     <option value="term">Term</option>
                     <option value="author">Author</option>
                 </select>
+                <label>  Date Range:  </label>
+                <select value={this.state.timeState} onChange={this.handleTime}>
+                    <option value="all">All</option>
+                    <option value="24Hours">24 Hours</option>
+                    <option value="week">Week</option>
+                    <option value="month">Month</option>
+                </select>
+                
                     <form onSubmit={this.handleSubmit}>
                         <input type="text" placeholder="Seach by term" value={this.state.question} onChange={e=>this.handleChange(e)} />
                         <input type="submit" value="Submit" />
@@ -211,6 +176,13 @@ class JustSearchBar extends Component {
                 <select value={this.state.dropdown} onChange={this.handleDropdown}>
                     <option value="term">Term</option>
                     <option value="author">Author</option>
+                </select>
+                <label>  Date Range:  </label>
+                <select value={this.state.timeState} onChange={this.handleTime}>
+                    <option value="all">All</option>
+                    <option value="24Hours">24 Hours</option>
+                    <option value="week">Week</option>
+                    <option value="month">Month</option>
                 </select>
                     <form onSubmit={this.handleSubmit}>
                         <input type="text" placeholder="Seach by author" value={this.state.question} onChange={e=>this.handleChange(e)} />
