@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import AxiosGet from './components/AxiosGet';
+// import AxiosGet from './components/AxiosGet';
 
 class JustSearchBar extends React.Component {
     constructor(props) {
@@ -37,7 +37,6 @@ class JustSearchBar extends React.Component {
                 </label>
                 <input type="submit" value="Submit" />
             </form>
-            <AxiosGet searchTerm={this.state.searchState}/>
             </section>
         );
     }
