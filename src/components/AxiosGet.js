@@ -6,7 +6,7 @@ const AxiosGet = (props) => {
         <div>
             <ol>{props.arrayOfStories.map((story, index) => {
                 return(
-                    <li key={index}> {story.title}<br /><a href={story.url} target="_blank">{story.url}</a></li>
+                    <li key={index}> {story.title}<br /><a href={story.url} target="_blank">{story.url}</a><br />{story.created_at}</li>
                 )
             })}</ol>
         </div>
