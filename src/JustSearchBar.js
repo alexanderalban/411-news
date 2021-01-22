@@ -3,12 +3,112 @@ import axios from 'axios';
 import AxiosGet from './components/AxiosGet';
 
 
-class JustSearchBar extends React.Component {
+class JustSearchBar extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
-            arrayOfStories: [],
+            arrayOfStories: [
+                {
+                id: 1,
+                created_at: "2006-10-09T18:21:51.000Z",
+                author: "pg",
+                title: "Y Combinator",
+                url: "http://ycombinator.com",
+                text: null,
+                points: 57,
+                parent_id: null,
+                children: 
+                [
+                {
+                id: 15,
+                created_at: "2006-10-09T19:51:01.000Z",
+                author: "sama",
+                text: "&#34;the rising star of venture capital&#34; -unknown VC eating lunch on SHR",
+                points: 5,
+                parent_id: 1,
+                children: 
+                [
+                {
+                id: 17,
+                created_at: "2006-10-09T19:52:45.000Z",
+                author: "pg",
+                text: "Is there anywhere to eat on Sandhill Road?",
+                points: 5,
+                parent_id: 15,
+                children: [ ]
+                }
+                ]
+                }
+                ]
+                },
+                {
+                    id: 2,
+                    created_at: "2006-10-09T18:21:51.000Z",
+                    author: "pg",
+                    title: "Y Combinator",
+                    url: "http://ycombinator.com",
+                    text: null,
+                    points: 57,
+                    parent_id: null,
+                    children: 
+                    [
+                    {
+                    id: 15,
+                    created_at: "2006-10-09T19:51:01.000Z",
+                    author: "sama",
+                    text: "&#34;the rising star of venture capital&#34; -unknown VC eating lunch on SHR",
+                    points: 5,
+                    parent_id: 1,
+                    children: 
+                    [
+                    {
+                    id: 17,
+                    created_at: "2006-10-09T19:52:45.000Z",
+                    author: "pg",
+                    text: "Is there anywhere to eat on Sandhill Road?",
+                    points: 5,
+                    parent_id: 15,
+                    children: [ ]
+                    }
+                    ]
+                    }
+                    ]
+                    },
+                    {
+                        id: 3,
+                        created_at: "2006-10-09T18:21:51.000Z",
+                        author: "pg",
+                        title: "Y Combinator",
+                        url: "http://ycombinator.com",
+                        text: null,
+                        points: 57,
+                        parent_id: null,
+                        children: 
+                        [
+                        {
+                        id: 15,
+                        created_at: "2006-10-09T19:51:01.000Z",
+                        author: "sama",
+                        text: "&#34;the rising star of venture capital&#34; -unknown VC eating lunch on SHR",
+                        points: 5,
+                        parent_id: 1,
+                        children: 
+                        [
+                        {
+                        id: 17,
+                        created_at: "2006-10-09T19:52:45.000Z",
+                        author: "pg",
+                        text: "Is there anywhere to eat on Sandhill Road?",
+                        points: 5,
+                        parent_id: 15,
+                        children: [ ]
+                        }
+                        ]
+                        }
+                        ]
+                        },
+            ],
             question: "",
             searchState: "",
             dropdown: "term",
@@ -44,23 +144,23 @@ class JustSearchBar extends React.Component {
         axios.get(searchTerm)
             .then( res => {
                 const arrayOfStories = res.data.hits
-                this.setState({ arrayOfStories })
+                // this.setState({ arrayOfStories })
             })
     }
 
-    // resetPage = () => {
-    //     console.log("click")
-    //     this.setState({
-    //         arrayOfStories: [],
-    //         question: "",
-    //         searchState: "",
-    //         dropdown: "term",
-    //         searched: false
-    //     })
-    // }
+    resetPage = () => {
+        console.log("click")
+        this.setState({
+            arrayOfStories: [],
+            question: "",
+            searchState: "",
+            dropdown: "term",
+            searched: false
+        })
+    }
     
     render() {
-        if(!this.state.searchState && this.state.dropdown == 'term') {
+        if(!this.state.searchState && this.state.dropdown === 'term') {
             return(
                 <section>
                 <label>Search By:  </label>
@@ -74,7 +174,7 @@ class JustSearchBar extends React.Component {
                 </form>
                 </section>
             );
-        } else if(!this.state.searchState && this.state.dropdown == 'author') {
+        } else if(!this.state.searchState && this.state.dropdown === 'author') {
             return(
                 <section>
                 <label>Search By:  </label>
@@ -88,7 +188,7 @@ class JustSearchBar extends React.Component {
                 </form>
                 </section>
             );
-        } else if (this.state.searchState && this.state.dropdown == 'term') {
+        } else if (this.state.searchState && this.state.dropdown === 'term') {
             return(
                 <section>
                     <label>Search By:  </label>
@@ -100,11 +200,11 @@ class JustSearchBar extends React.Component {
                         <input type="text" placeholder="Seach by term" value={this.state.question} onChange={e=>this.handleChange(e)} />
                         <input type="submit" value="Submit" />
                     </form>
-                    {/* <button onClick={this.resetPage}>reset</button> */}
+                    <button onClick={this.resetPage}>reset</button>
                     <AxiosGet arrayOfStories={this.state.arrayOfStories} />
                 </section>
             )
-        } else if (this.state.searchState && this.state.dropdown == 'author') {
+        } else if (this.state.searchState && this.state.dropdown === 'author') {
             return(
                 <section>
                     <label>Search By:  </label>
@@ -116,7 +216,7 @@ class JustSearchBar extends React.Component {
                         <input type="text" placeholder="Seach by author" value={this.state.question} onChange={e=>this.handleChange(e)} />
                         <input type="submit" value="Submit" />
                     </form>
-                    {/* <button onClick={this.resetPage}>reset</button> */}
+                    <button onClick={this.resetPage}>reset</button>
                     <AxiosGet arrayOfStories={this.state.arrayOfStories} />
                 </section>
             )
