@@ -105,12 +105,12 @@ class JustSearchBar extends Component {
             return(
                 <section>
                 <label>Search By:  </label>
-                <select value={this.state.dropdown} onChange={this.handleDropdown}>
+                <select className="search-term" value={this.state.dropdown} onChange={this.handleDropdown}>
                     <option value="term" >Term</option>
                     <option value="author">Author</option>
                 </select>
                 <label>  Date Range:  </label>
-                <select value={this.state.timeState} onChange={this.handleTime}>
+                <select className="date-range" value={this.state.timeState} onChange={this.handleTime}>
                     <option value="all">All</option>
                     <option value="24Hours">24 Hours</option>
                     <option value="week">Week</option>
@@ -118,8 +118,8 @@ class JustSearchBar extends Component {
                 </select>
 
                 <form onSubmit={this.handleSubmit}>
-                    <input type="text" placeholder="Seach by term" value={this.state.question} onChange={e=>this.handleChange(e)} />
-                    <input type="submit" value="Submit" />
+                    <input className='search-bar' type="text" placeholder="Seach by term" value={this.state.question} onChange={e=>this.handleChange(e)} />
+                    <input className="submit" type="submit" value="Submit" />
                 </form>
                 </section>
             );
@@ -127,21 +127,21 @@ class JustSearchBar extends Component {
             return(
                 <section>
                 <label>Search By:  </label>
-                <select value={this.state.dropdown} onChange={this.handleDropdown}>
+                <select className="search-term" value={this.state.dropdown} onChange={this.handleDropdown}>
                     <option value="term" >Term</option>
                     <option value="author">Author</option>
                 </select>
 
                 <label>  Date Range:  </label>
-                <select value={this.state.timeState} onChange={this.handleTime}>
+                <select className="date-range" value={this.state.timeState} onChange={this.handleTime}>
                     <option value="all">All</option>
                     <option value="24Hours">24 Hours</option>
                     <option value="Week">Week</option>
                     <option value="Month">Month</option>
                 </select>
                 <form onSubmit={this.handleSubmit}>
-                    <input type="text" placeholder="Seach by author" value={this.state.question} onChange={e=>this.handleChange(e)} />
-                    <input type="submit" value="Submit" />
+                    <input className='search-bar' type="text" placeholder="Seach by author" value={this.state.question} onChange={e=>this.handleChange(e)} />
+                    <input className="submit" type="submit" value="Submit" />
                 </form>
                 </section>
             );
@@ -149,12 +149,12 @@ class JustSearchBar extends Component {
             return(
                 <section>
                     <label>Search By:  </label>
-                <select value={this.state.dropdown} onChange={this.handleDropdown}>
+                <select className="search-term" value={this.state.dropdown} onChange={this.handleDropdown}>
                     <option value="term">Term</option>
                     <option value="author">Author</option>
                 </select>
                 <label>  Date Range:  </label>
-                <select value={this.state.timeState} onChange={this.handleTime}>
+                <select className="date-range" value={this.state.timeState} onChange={this.handleTime}>
                     <option value="all">All</option>
                     <option value="24Hours">24 Hours</option>
                     <option value="week">Week</option>
@@ -162,8 +162,8 @@ class JustSearchBar extends Component {
                 </select>
                 
                     <form onSubmit={this.handleSubmit}>
-                        <input type="text" placeholder="Seach by term" value={this.state.question} onChange={e=>this.handleChange(e)} />
-                        <input type="submit" value="Submit" />
+                        <input className='search-bar' type="text" placeholder="Seach by term" value={this.state.question} onChange={e=>this.handleChange(e)} />
+                        <input className="submit" type="submit" value="Submit" />
                     </form>
                     <button onClick={this.resetPage}>reset</button>
                     <AxiosGet arrayOfStories={this.state.arrayOfStories} />
@@ -173,20 +173,20 @@ class JustSearchBar extends Component {
             return(
                 <section>
                     <label>Search By:  </label>
-                <select value={this.state.dropdown} onChange={this.handleDropdown}>
+                <select className="search-term" value={this.state.dropdown} onChange={this.handleDropdown}>
                     <option value="term">Term</option>
                     <option value="author">Author</option>
                 </select>
                 <label>  Date Range:  </label>
-                <select value={this.state.timeState} onChange={this.handleTime}>
+                <select className="date-range" value={this.state.timeState} onChange={this.handleTime}>
                     <option value="all">All</option>
                     <option value="24Hours">24 Hours</option>
                     <option value="week">Week</option>
                     <option value="month">Month</option>
                 </select>
                     <form onSubmit={this.handleSubmit}>
-                        <input type="text" placeholder="Seach by author" value={this.state.question} onChange={e=>this.handleChange(e)} />
-                        <input type="submit" value="Submit" />
+                        <input className="search-bar" type="text" placeholder="Seach by author" value={this.state.question} onChange={e=>this.handleChange(e)} />
+                        <input className='submit' type="submit" value="Submit" />
                     </form>
                     <button onClick={this.resetPage}>reset</button>
                     <AxiosGet arrayOfStories={this.state.arrayOfStories} />

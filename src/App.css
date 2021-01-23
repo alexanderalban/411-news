@@ -1,16 +1,65 @@
 .App {
   text-align: center;
+  font-family: "Fraunces", serif;
 }
 
 .App-header {
   background-color: #21252b;
   min-height: 100vh;
+  padding-top: 2em;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  /* justify-content: center; */
+  font-size: 40px;
+  color: #e9ebf6;
+}
+
+label {
+  margin-top: 100px;
+}
+
+.search-term,
+.date-range {
+  height: 34px;
+  border: none;
+  font-size: 20px;
+  background-color: #ffbb9e;
+}
+.search-term:focus-within {
+  outline: none;
+}
+
+.date-range:focus-within {
+  outline: none;
+}
+
+.search-bar {
+  width: 20em;
+  height: 34px;
+  font-size: 20px;
+  border: none;
+  margin-right: 20px;
+}
+
+.search-bar:focus-within {
+  outline: none;
+}
+
+.submit,
+button {
+  height: 34px;
+  border: none;
+  background-color: #ffbb9e;
+  font-size: 20px;
+}
+
+.submit:focus-within {
+  outline: none;
+}
+
+button:focus-within {
+  outline: none;
 }
 
 ol {
@@ -21,10 +70,10 @@ li {
   color: #e9ebf6;
   background: #7d7d7d;
   font-family: "Fraunces", serif;
-  font-size: 40px;
+  font-size: 32px;
   height: 200px;
   width: 80vw;
-  padding-left: 35px;
+  padding: 40px 0px 0px 35px;
   list-style: none;
   margin-bottom: 15px;
   border-radius: 10px;
@@ -37,7 +86,8 @@ a {
   color: #ffbb9e;
 }
 
-@import url("https://fonts.googleapis.com/css2?family=Fraunces&display=swap"); /* @media (prefers-reduced-motion: no-preference) {
+@import url("https://fonts.googleapis.com/css2?family=Fraunces&display=swap");
+/* @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
